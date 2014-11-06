@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type = "text/javascript" src="javascript/jquery-2.1.1.js"></script>
+<script type = "text/javascript" src="javascript/jquery-ui.js"></script>
+<link href="themes/jquery-ui.css" rel="stylesheet">
+<script type = "text/javascript">
+jQuery(document).ready(function(){
+	//var a = jQuery("#helloworld").html()
+	//alert(a);
+	callHelloWorld();
+})
+function callHelloWorld(){
+jQuery.ajax("http://localhost:8080/OASystem/api/helloworld",
+		{
+	async:true,
+	dataType:"json",
+	success:function oncallback(data,status,jqXHR){
+		$("#helloworld").html(data.returnString);
+	},
+	error:function onerror(jqXHR,status,errorString){
+		alert(errorString);
+	}
+		});
+}
+
+function testDialog(){
+	$( "#dialog" ).dialog({
+		autoOpen: false,
+		width: 400,
+		buttons: [
+			{
+				text: "Ok",
+				click: function() {
+					$( this ).dialog( "close" );
+				}
+			},
+			{
+				text: "Cancel",
+				click: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		]
+	});
+	$("#dialog").dialog("open");
+}
+</script>
+</head>
+<body>
+<div id = "helloworld">this is abc</div>
+<input id = "input1" type="button" onclick = "testDialog();"/>
+<div id = "dialog" style = "display:none;">asdfasdfsdfsdfsfsdf</div>
+
+</body>
+</html>

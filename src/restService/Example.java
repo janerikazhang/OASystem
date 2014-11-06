@@ -35,6 +35,6 @@ public class Example
 	@Produces("text/plain; charset=utf-8")
 	public String getClueList()
 	{
-		return "hello world";
+		return "{\"returnString\":\"hello world\"}";
 	}
 }

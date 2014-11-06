@@ -100,6 +100,52 @@
 			params: [], //allow optional parameters to be passed around
 			procmsg: 'Processing, please wait ...',
 			query: '',
+			trclick : function () {
+				$('tbody tr', g.bDiv).on('click', function (e) {
+					var obj = (e.target || e.srcElement);
+					if (obj.href || obj.type) return true;
+					if (e.ctrlKey || e.metaKey) {
+						// mousedown already took care of this case
+						return;
+					}
+					$(this).toggleClass('trSelected');
+					if (p.singleSelect && ! g.multisel) {
+						$(this).siblings().removeClass('trSelected');
+					}
+				}).on('mousedown', function (e) {
+					if (e.shiftKey) {
+						$(this).toggleClass('trSelected');
+						g.multisel = true;
+						this.focus();
+						$(g.gDiv).noSelect();
+					}
+					if (e.ctrlKey || e.metaKey) {
+						$(this).toggleClass('trSelected');
+						g.multisel = true;
+						this.focus();
+					}
+				}).on('mouseup', function (e) {
+					if (g.multisel && ! (e.ctrlKey || e.metaKey)) {
+						g.multisel = false;
+						$(g.gDiv).noSelect(false);
+					}
+				}).on('dblclick', function () {
+					if (p.onDoubleClick) {
+						p.onDoubleClick(this, g, p);
+					}
+				}).hover(function (e) {
+					if (g.multisel && e.shiftKey) {
+						$(this).toggleClass('trSelected');
+					}
+				}, function () {});
+				if (browser.msie && browser.version < 7.0) {
+					$(this).hover(function () {
+						$(this).addClass('trOver');
+					}, function () {
+						$(this).removeClass('trOver');
+					});
+				}
+			},
 			qtype: '',
 			nomsg: 'No items',
 			minColToggle: 1, //minimum allowed column to be hidden
@@ -773,52 +819,7 @@
 					pwt: pwt
 				};
 			},
-			addRowProp: function () {
-				$('tbody tr', g.bDiv).on('click', function (e) {
-					var obj = (e.target || e.srcElement);
-					if (obj.href || obj.type) return true;
-					if (e.ctrlKey || e.metaKey) {
-						// mousedown already took care of this case
-						return;
-					}
-					$(this).toggleClass('trSelected');
-					if (p.singleSelect && ! g.multisel) {
-						$(this).siblings().removeClass('trSelected');
-					}
-				}).on('mousedown', function (e) {
-					if (e.shiftKey) {
-						$(this).toggleClass('trSelected');
-						g.multisel = true;
-						this.focus();
-						$(g.gDiv).noSelect();
-					}
-					if (e.ctrlKey || e.metaKey) {
-						$(this).toggleClass('trSelected');
-						g.multisel = true;
-						this.focus();
-					}
-				}).on('mouseup', function (e) {
-					if (g.multisel && ! (e.ctrlKey || e.metaKey)) {
-						g.multisel = false;
-						$(g.gDiv).noSelect(false);
-					}
-				}).on('dblclick', function () {
-					if (p.onDoubleClick) {
-						p.onDoubleClick(this, g, p);
-					}
-				}).hover(function (e) {
-					if (g.multisel && e.shiftKey) {
-						$(this).toggleClass('trSelected');
-					}
-				}, function () {});
-				if (browser.msie && browser.version < 7.0) {
-					$(this).hover(function () {
-						$(this).addClass('trOver');
-					}, function () {
-						$(this).removeClass('trOver');
-					});
-				}
-			},
+			addRowProp: p.trclick,
 
 			combo_flag: true,
 			combo_resetIndex: function(selObj)

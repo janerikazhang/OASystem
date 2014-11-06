@@ -52,82 +52,98 @@ function testDialog(){
 	$("#dialog").dialog("open");
 }
 function test(){
-jQuery("#flexme4").flexigrid({
-    url : 'http://localhost:8080/OASystem/api/testGrid',
-    dataType : 'json',
-    colModel : [ {
-        display : 'EmployeeID',
-        name : 'employeeID',
-        width : 90,
-        sortable : false,
-        align : 'center'
-        }, {
-            display : 'Name',
-            name : 'name',
-            width : 120,
-            sortable : false,
-            align : 'left'
-        }, {
-            display : 'Primary Language',
-            name : 'primary_language',
-            width : 120,
-            sortable : false,
-            align : 'left'
-        }, {
-            display : 'Favorite Color',
-            name : 'favorite_color',
-            width : 80,
-            sortable : false,
-            align : 'left',
-            hide : false
-        }, {
-            display : 'Favorite Animal',
-            name : 'favorite_pet',
-            width : 80,
-            sortable : false,
-            align : 'right'
-    } ],
-    buttons : [ {
-        name : 'Add',
-        bclass : 'add',
-        onpress : Example4
-        }
-        ,
-        {
-            name : 'Edit',
-            bclass : 'edit',
-            onpress : Example4
-        }
-        ,
-        {
-            name : 'Delete',
-            bclass : 'delete',
-            onpress : Example4
-        }
-        ,
-        {
-            separator : true
-        } 
-    ],
-    searchitems : [ {
-        display : 'EmployeeID',
-        name : 'employeeID'
-        }, {
-            display : 'Name',
-            name : 'name',
-            isdefault : true
-    } ],
-    sortname : "iso",
-    sortorder : "asc",
-    usepager : true,
-    title : 'Employees',
-    useRp : true,
-    rp : 15,
-    showTableToggleBtn : true,
-    width : 750,
-    height : 200
-});
+	jQuery("#flexme4").flexigrid({
+	    url : 'http://localhost:8080/OASystem/api/testGrid',
+	    dataType : 'json',
+	    colModel : [ {
+	        display : 'EmployeeID',
+	        name : 'employeeID',
+	        width : 90,
+	        sortable : false,
+	        align : 'center'
+	        }, {
+	            display : 'Name',
+	            name : 'name',
+	            width : 120,
+	            sortable : false,
+	            align : 'left'
+	        }, {
+	            display : 'Primary Language',
+	            name : 'primary_language',
+	            width : 120,
+	            sortable : false,
+	            align : 'left'
+	        }, {
+	            display : 'Favorite Color',
+	            name : 'favorite_color',
+	            width : 80,
+	            sortable : false,
+	            align : 'left',
+	            hide : false
+	        }, {
+	            display : 'Favorite Animal',
+	            name : 'favorite_pet',
+	            width : 80,
+	            sortable : false,
+	            align : 'right'
+	    } ],
+	    buttons : [ {
+	        name : 'Add',
+	        bclass : 'add',
+	        onpress : Example4
+	        }
+	        ,
+	        {
+	            name : 'Edit',
+	            bclass : 'edit',
+	            onpress : Example4
+	        }
+	        ,
+	        {
+	            name : 'Delete',
+	            bclass : 'delete',
+	            onpress : Example4
+	        }
+	        ,
+	        {
+	            separator : true
+	        } 
+	    ],
+	    searchitems : [ {
+	        display : 'EmployeeID',
+	        name : 'employeeID'
+	        }, {
+	            display : 'Name',
+	            name : 'name',
+	            isdefault : true
+	    } ],
+	    sortname : "iso",
+	    sortorder : "asc",
+	    usepager : true,
+	    title : 'Employees',
+	    useRp : true,
+	    rp : 1,
+	    showTableToggleBtn : true,
+	    width : 750,
+	    height : 200,
+	    trclick : function () {
+			$('#flexme4 tr').on('click', function (e) {
+				var a = $(e.currentTarget);
+				alert(a.attr("id"));
+			}).on('mousedown', function (e) {
+				
+			}).on('mouseup', function (e) {
+				
+			}).on('dblclick', function () {
+				
+			}).hover(function (e) {
+				
+			}, function () {});
+		}
+	});
+	
 }
+
 function Example4(com, grid) {
     if (com == 'Delete') {
         var conf = confirm('Delete ' + $('.trSelected', grid).length + ' items?')

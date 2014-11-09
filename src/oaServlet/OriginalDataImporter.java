@@ -87,8 +87,8 @@ public class OriginalDataImporter extends HttpServlet
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		
-		Example example = new Example();
-		example.getAttendenceResult();
+		//Example example = new Example();
+		//example.getAttendenceResult();
 		//String token = request.getSession().getAttribute("usertoken").toString();
 		String result = "";
 		
@@ -124,7 +124,7 @@ public class OriginalDataImporter extends HttpServlet
 			}
 			
 			PrintWriter out = response.getWriter();
-			//result = "{\"content\":\""+result+"\"}";
+			result = "{\"content\":\""+result+"\"}";
 			out.println(result);
 			//分情况返回添加结果(有无错误/有无重复行)
 			

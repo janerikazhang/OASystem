@@ -1,24 +1,100 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type = "text/javascript" src="javascript/jquery-2.1.1.js"></script>
-<script type = "text/javascript" src="javascript/jquery-ui.js"></script>
-<script type = "text/javascript" src="javascript/jquery-form.js"></script>
-<script type = "text/javascript" src="javascript/grid/flexigrid.js"></script>
-<link href="webapps/themes/jquery-ui.css" rel="stylesheet">
-<link href="webapps/themes/flexigrid.css" rel="stylesheet">
-<script type = "text/javascript">
-	<script type = "text/javascript" src="javascript/attendence.js"></script>
 jQuery(document).ready(function(){
 	//var a = jQuery("#helloworld").html()
 	//alert(a);
 	callHelloWorld();
 	test();
 })
+
+function importData() {
+	if (jQuery('#divUploadFile').length == 0){
+		createDiv();
+	}
+	jQuery("#divUploadFile").dialog({
+		bgiframe : true,
+		title : "导入excel",
+		closeOnEscape : false,
+		draggable : true,
+		modal : true,
+		resizable : true,
+		width : 724,
+		height : "auto",
+		buttons : {
+			"关闭" : function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+}
+
+function createDiv(){
+	
+	var uploadDiv = $("<div></div>");
+	uploadDiv.attr("id", "divUploadFile");
+	uploadDiv.css("display", "");
+	uploadDiv.appendTo("body");
+
+	var preFormDiv = $("<div></div>");
+	preFormDiv.addClass('');
+	preFormDiv.appendTo(uploadDiv);
+
+	var preForm = $("<form></form>");
+	preForm.attr({
+		"id" : "form_portrait",
+		"action" : "../OASystem/servlet/OriginalDataImporter",
+		"method" : "POST",
+		"enctype" : "multipart/form-data"
+	});
+	preForm.appendTo(preFormDiv);
+
+	var uploadTab = $("<table></table>");
+	uploadTab.css("width", "100%");
+	uploadTab.appendTo(preForm);
+
+	var tr = $("<tr></tr>");
+	tr.appendTo(uploadTab);
+
+	var th = $("<th width='160px'>原始考勤文档：</th>");
+	th.appendTo(tr);
+
+	var td = $("<td></td>");
+	td.appendTo(tr);
+
+	var fileInput = $("<input></input>");
+	fileInput.attr({
+		"type" : "file",
+		"name" : "img",
+		"id" : "f_portrait",
+		"size" : "30"
+	});
+	fileInput.css({"margin-top":"5px"});
+	fileInput.appendTo(td);
+
+	var fileBtn = $("<input></input>");
+	fileBtn.attr({
+		"type" : "submit",
+		"id" : "btn_preview",
+		"value" : "上传"
+	});
+	fileBtn.css("padding", "0 20px");
+	fileBtn.addClass("button");
+	fileBtn.appendTo(td);
+
+	$('#form_portrait').ajaxForm({
+		dataType : 'json',
+		success : function(json) {
+			if (json.content) {
+				alert(json.content);
+				jQuery("#divUploadFile").dialog("close");
+			}
+		}
+	});
+
+
+}
+
+
 function callHelloWorld(){
-jQuery.ajax("http://localhost:8080/OASystem/api/helloworld",
+jQuery.ajax("../OASystem/api/helloworld",
 		{
 	async:true,
 	dataType:"json",
@@ -54,7 +130,7 @@ function testDialog(){
 }
 function test(){
 	jQuery("#flexme4").flexigrid({
-	    url : 'http://localhost:8080/OASystem/api/testGrid',
+	    url : '../OASystem/api/testGrid',
 	    dataType : 'json',
 	    colModel : [ {
 	        display : 'EmployeeID',
@@ -206,14 +282,3 @@ function Example4(com, grid) {
 }
 
 
-
-</script>
-</head>
-<body>
-<div id = "helloworld">this is abc</div>
-<input id = "input1" type="button" onclick = "importData();"/>
-<div id = "dialog" style = "display:none;">asdfasdfsdfsdfsfsdf</div>
-<table id="flexme4" style="display: none"></table>
-
-</body>
-</html>

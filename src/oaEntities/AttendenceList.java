@@ -4,14 +4,29 @@ import java.util.List;
 
 public class AttendenceList {
 	public String monthOdAttendence;
+	public String yearOdAttendence;
 	public String fullDays;
 	public List<ItemAttendence> listItems;
 	
 	
-	public AttendenceList(String monthOdAttendence, String fullDays,
-			List<ItemAttendence> listItems) {
+	
+
+
+	public String getYearOdAttendence() {
+		return yearOdAttendence;
+	}
+
+
+	public void setYearOdAttendence(String yearOdAttendence) {
+		this.yearOdAttendence = yearOdAttendence;
+	}
+
+
+	public AttendenceList(String monthOdAttendence, String yearOdAttendence,
+			String fullDays, List<ItemAttendence> listItems) {
 		super();
 		this.monthOdAttendence = monthOdAttendence;
+		this.yearOdAttendence = yearOdAttendence;
 		this.fullDays = fullDays;
 		this.listItems = listItems;
 	}

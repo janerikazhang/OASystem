@@ -7,21 +7,21 @@ public class DayAttendence {
 	private Date date;
 	private Date inHour;
 	private Date outHour;
-	private String dateType;//日期類型，休息日/工作日
+	private boolean isHoliday;//日期類型，休息日/工作日
 	private boolean isMSpecial;//是否是特殊情況(上午)
 	private boolean isASpecial;//是否是特殊情況（下午）
 	private String mSpecialType;//特殊類型，遲到/早退/缺勤/年假/病假/事假/其他（上午）
 	private String aSpecialType;//特殊類型，遲到/早退/缺勤/年假/病假/事假/其他（下午）
 	
 	
-	public DayAttendence(Date date, Date inHour, Date outHour, String dateType,
+	public DayAttendence(Date date, Date inHour, Date outHour, boolean isHoliday,
 			boolean isMSpecial, boolean isASpecial, String mSpecialType,
 			String aSpecialType) {
 		super();
 		this.date = date;
 		this.inHour = inHour;
 		this.outHour = outHour;
-		this.dateType = dateType;
+		this.isHoliday = isHoliday;
 		this.isMSpecial = isMSpecial;
 		this.isASpecial = isASpecial;
 		this.mSpecialType = mSpecialType;
@@ -59,17 +59,17 @@ public class DayAttendence {
 	}
 
 
-	public String getDateType() {
-		return dateType;
+	public boolean getIsHoliday() {
+		return isHoliday;
 	}
 
 
-	public void setDateType(String dateType) {
-		this.dateType = dateType;
+	public void setIsHoliday(boolean isHoliday) {
+		this.isHoliday = isHoliday;
 	}
 
 
-	public boolean isMSpecial() {
+	public boolean getIsMSpecial() {
 		return isMSpecial;
 	}
 
@@ -79,7 +79,7 @@ public class DayAttendence {
 	}
 
 
-	public boolean isASpecial() {
+	public boolean getIsASpecial() {
 		return isASpecial;
 	}
 
@@ -89,22 +89,22 @@ public class DayAttendence {
 	}
 
 
-	public String getmSpecialType() {
+	public String getMSpecialType() {
 		return mSpecialType;
 	}
 
 
-	public void setmSpecialType(String mSpecialType) {
+	public void setMSpecialType(String mSpecialType) {
 		this.mSpecialType = mSpecialType;
 	}
 
 
-	public String getaSpecialType() {
+	public String getASpecialType() {
 		return aSpecialType;
 	}
 
 
-	public void setaSpecialType(String aSpecialType) {
+	public void setASpecialType(String aSpecialType) {
 		this.aSpecialType = aSpecialType;
 	}
 	

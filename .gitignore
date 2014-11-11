@@ -3,3 +3,8 @@
 .idea/
 *.iml
 out/
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp

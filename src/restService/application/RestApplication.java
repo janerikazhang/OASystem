@@ -1,18 +1,10 @@
-/************************************************************************
-日  期：		2014-05-06
-作  者:		李融
-版  本：     
-描  述:	    
-历  史：      
- ************************************************************************/
 package restService.application;
 
-import java.util.HashSet;
-import java.util.Set;
+import restService.Example;
 
 import javax.ws.rs.core.Application;
-
-import restService.Example;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RestApplication extends Application
 {

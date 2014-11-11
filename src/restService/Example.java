@@ -30,11 +30,6 @@ import org.dom4j.Element;
 
 import com.google.gson.Gson;
 
-/**
- * 
- * 
- * @author 李融
- */
 @Path("")
 public class Example
 {

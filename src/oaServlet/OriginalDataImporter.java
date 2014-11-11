@@ -1,45 +1,24 @@
-/************************************************************************
-日  期：		2011/11/23
-作  者:		李融
-版  本：     4.5
-描  述:	    用户数据导入导出
-历  史：		
- ************************************************************************/
 package oaServlet;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Iterator;
-import java.util.List;
-
-
-
-
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
-import restService.Example;
-
-/**
- * 
- * @author LiRong
- */
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.List;
 @SuppressWarnings("serial")
 public class OriginalDataImporter extends HttpServlet
 {

@@ -23,12 +23,15 @@ import javax.ws.rs.QueryParam;
 import oaEntities.AttendenceList;
 import oaEntities.DayAttendence;
 import oaEntities.ItemAttendence;
+import oaEntities.UserLoginEntity;
+import oaUUM.UserAction;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Path("")
 public class Example
@@ -53,6 +56,26 @@ public class Example
 	public String getClueList()
 	{
 		return "{\"returnString\":\"hello world\"}";
+	}
+	
+	@POST
+	@Path("/login")
+	@Produces("text/plain; charset=utf-8")
+	public String login(String requestJson)
+	{
+		Gson gs = new Gson();
+		UserLoginEntity ule = gs.fromJson(requestJson, UserLoginEntity.class);
+		UserAction ua = new UserAction();
+		return ua.userLogin(ule.getLoginid(), ule.getPassword());
+	}
+	
+	@POST
+	@Path("/logout")
+	@Produces("text/plain; charset=utf-8")
+	public void logout(String accessToken)
+	{
+		UserAction ua = new UserAction();
+		ua.userLogout(accessToken);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -80,13 +103,13 @@ public class Example
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://192.168.5.101:3306/OASystem", "danlihome","ld7vd6yt");
+			con = DriverManager.getConnection("jdbc:mysql://danlihome.wicp.net:3308/OASystem", "danlihome","ld7vd6yt");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			
 			String userRecordXml = generateXML(statamentMySQL.executeQuery("select distinct USER_NAME from oa_attendence"));
 			
-			String holidayRecordXml = generateXML(statamentMySQL.executeQuery("select  HOLIDAY,HOLIDAY,WORKSAT from oa_holiday_arrengement where year = '"+year+"' AND month = '"+month+"'"));
+			String holidayRecordXml = generateXML(statamentMySQL.executeQuery("select  HOLIDAY,ARRENGEMENT,WORKSAT from oa_holiday_arrengement where year = '"+year+"' AND month = '"+month+"'"));
 			
 			Document holiday = DocumentHelper.parseText(holidayRecordXml);
 			
@@ -189,7 +212,12 @@ public class Example
 						  
 						    }
 						    else{//todo:跨月代码
-						    	item = new DayAttendence(date1, null, null, isHoliday, true, true, "1", "1");
+						    	if (isHoliday){
+					    			item = new DayAttendence(date1, null, null, isHoliday, false, false, "0", "0");
+					    		}
+					    		else{
+					    			item = new DayAttendence(date1, null, null, isHoliday, true, true, "1", "1");
+					    		}
 						    }
 						}
 						else if (dayList.size() == 1){
@@ -418,7 +446,7 @@ public class Example
 			}
 			
 			AttendenceList al = new AttendenceList(month , year, Double.toString(non), iaL);
-			Gson gson = new Gson();
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 			System.out.println(gson.toJson(al));
 			
 			

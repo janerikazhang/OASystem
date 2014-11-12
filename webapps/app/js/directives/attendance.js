@@ -1,5 +1,5 @@
 /* Directives */
-define('attendance', function () {
+define([], function () {
   'use strict';
 
   return function (module) {
@@ -9,7 +9,7 @@ define('attendance', function () {
             restrict: 'E',
             replace: true,
             scope: {},
-            templateUrl: 'app/js/directives/templates/attendanceDirective.html',
+            templateUrl: 'js/directives/templates/attendanceDirective.html',
             controller: 'oa-controller'
           }
     })

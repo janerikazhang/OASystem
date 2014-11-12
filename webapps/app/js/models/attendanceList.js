@@ -2172,7 +2172,7 @@ define([], function () {
         var def = {
             field:colName,
             displayName: colName,
-            cellTemplate: '<div class="ngCellText"><div>{{row.entity[$index+5].startTime}}</div><div>{{row.entity[$index+5].endTime}}</div></div>'
+            cellTemplate: '<div class="ngCellText"><div>{{row.entity[$index-2].startTime}}</div><div>{{row.entity[$index-2].endTime}}</div></div>'
             //cellTemplate: '<div class="ngCellText">{{row.entity[$index+5].startTime}}</div>'
         }
         columnDefs.push(def);

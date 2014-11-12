@@ -1,6 +1,6 @@
 /*global define, document*/
 
-define(['require','js/directives/attendance', 'js/controllers'], function (require, directives, controllers) {
+define(['require','js/directives/attendance', 'js/controllers/attendanceCtrl'], function (require, directives, controllers) {
   'use strict';
 
   var angular = require('angular');

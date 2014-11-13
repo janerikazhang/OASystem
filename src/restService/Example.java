@@ -84,6 +84,7 @@ public class Example
 	@Produces("text/plain; charset=utf-8")
 	public String getAttendenceResult()
 	{
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		String year = "2014";
 		String month = "10";
 		String holidayString = "";
@@ -446,12 +447,8 @@ public class Example
 			}
 			
 			AttendenceList al = new AttendenceList(month , year, Double.toString(non), iaL);
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-			System.out.println(gson.toJson(al));
-			
-			
-			
-			
+			System.out.println(al);
+			return gson.toJson(al);
 		}catch (Exception e){
 			try {
 				con.rollback();
@@ -477,7 +474,7 @@ public class Example
 		
 		
 		
-		return null;
+		
 	}
 	
 	@POST

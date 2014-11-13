@@ -1,6 +1,11 @@
 /*global define, document*/
 
-define(['require','js/directives/attendance', 'js/controllers/attendanceCtrl'], function (require, directives, controllers) {
+define(['require',
+    'js/directives/attendance',
+    'js/controllers/attendanceCtrl',
+    'js/directives/fileModelDirective',
+    'js/controllers/fileModelCtrl'
+], function (require, attendanceDirective, attendanceController, fileModelDirective, fileModelController) {
   'use strict';
 
   var angular = require('angular');
@@ -13,8 +18,10 @@ define(['require','js/directives/attendance', 'js/controllers/attendanceCtrl'], 
   var module = angular.module('myapp', ['ngGrid']);
   //filters(module);
   //services(module);
-  controllers(module);
-  directives(module);
+    attendanceDirective(module);
+    attendanceController(module);
+    //fileModelDirective(module);
+    //fileModelController(module);
   console.log(module);
 
   //module.config(['$routeProvider', function($routeProvider) {

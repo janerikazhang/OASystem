@@ -3,7 +3,9 @@
  * @constructor
  */
 
-define(['../models/attendanceList', 'js/services/attendanceService'],function (attendanceList, attendanceService) {
+define(['../models/attendanceList',
+    'js/services/attendanceService',
+    'js/services/uploadFileService'],function (attendanceList, attendanceService, uploadFileService) {
     'use strict';
     return function (module) {
         module.controller('oa-controller',
@@ -18,8 +20,8 @@ define(['../models/attendanceList', 'js/services/attendanceService'],function (a
                     $scope.uploadFile = function(){
                         var file = $scope.myFile;
                         console.log('file is ' + JSON.stringify(file));
-                        //var uploadUrl = "/fileUpload";
-                        //fileUpload.uploadFileToUrl(file, uploadUrl);
+                        var uploadUrl = "http://localhost:8080/OASystem/servlet/OriginalDataImporter";
+                        uploadFileService.uploadFile(file, $http);
                     };
                     //get data from service
                     attendanceService.getAttendanceInfo(1, $http)

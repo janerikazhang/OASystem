@@ -2143,7 +2143,7 @@ define ([], function () {
     return {
         parseJason: function(data) {
             //get a json and we parse it
-            data = object;
+            //data = object; //comment out this line to get real data
             var outputData = {
                 Date: data.monthOdAttendence+"/"+data.yearOdAttendence,
                 Days: data.fullDays,
@@ -2161,9 +2161,9 @@ define ([], function () {
                 var attendenceList = data.listItems[currentStaff].attendenceList;
                 for (var day in attendenceList) {
                     var startTime = attendenceList[day].inHour? attendenceList[day].inHour:'';
-                    startTime = startTime.substring(startTime.indexOf(',') +7, startTime.length-1);
+                    startTime = startTime.substring(startTime.indexOf(' '), startTime.length-1);
                     var endTime = attendenceList[day].outHour? attendenceList[day].outHour:'';
-                    endTime = endTime.substring(endTime.indexOf(',')+7, endTime.length-1);
+                    endTime = endTime.substring(endTime.indexOf(' '), endTime.length-1);
                     row[daynum.toString()] = {
                         startTime: startTime,
                         endTime: endTime
@@ -2188,47 +2188,10 @@ define ([], function () {
         },
         getAttendanceInfo: function (month, $http) {
             console.log('this is month ', month);
-            return $http.get('http://localhost:8080/OASystem/api/helloworld').
+            return $http.get('http://localhost:8080/OASystem/api/attendenceResult').
                 success(function(data) {
-                    //get a json and we parse it
-                    data = object;
-                    var outputData = {
-                        Date: data.monthOdAttendence+"/"+data.yearOdAttendence,
-                        Days: data.fullDays,
-                        tableData: []
-                    }
-                    var index = 1;
-                    for (var currentStaff in data.listItems) {
-                        //build a row in table
-                        var row = {};
-                        row.index = index;
-                        row.employeeName = data.listItems[currentStaff].employeeName;
-                        row.departmentName = data.listItems[currentStaff].departmentName;
-                        //push days in
-                        var daynum = 1;
-                        var attendenceList = data.listItems[currentStaff].attendenceList;
-                        for (var day in attendenceList) {
-                            row[daynum.toString()] = {
-                                startTime: attendenceList[day].inHour? attendenceList[day].inHour:'',
-                                endTime: attendenceList[day].outHour? attendenceList[day].outHour:''
-                            }
-                            daynum++;
-                        }
-                        row.numberOfSpecial = data.listItems[currentStaff].numberOfSpecial; //迟到早退漏打卡
-                        row.numberOfALeave = data.listItems[currentStaff].numberOfALeave; //年假
-                        row.numberOfIllegalLeave = data.listItems[currentStaff].numberOfIllegalLeave; //缺勤
-                        row.numberOfEventLeave = data.listItems[currentStaff].numberOfEventLeave; //事假
-                        row.numberOfSickLeave = data.listItems[currentStaff].numberOfSickLeave; //病假
-                        row.numberOfDayOnline = data.listItems[currentStaff].numberOfDayOnline; //实际上班天数
-                        row.isHardWorking = data.listItems[currentStaff].isHardWorking; //勤奋奖
-                        row.isFullAttendence = data.listItems[currentStaff].isFullAttendence; // 全勤奖
-                        row.remark = data.listItems[currentStaff].remark; // 备注
-                        row.punishment = data.listItems[currentStaff].punishment; // 扣款
-
-                        outputData.tableData.push(row);
-                        index++;
-                    }
-                    return outputData;
+                    console.log('success get attendance result.', data)
+                    return data;
                 });
         }
     }

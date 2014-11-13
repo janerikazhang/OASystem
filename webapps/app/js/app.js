@@ -3,9 +3,7 @@
 define(['require',
     'js/directives/attendance',
     'js/controllers/attendanceCtrl',
-    'js/directives/fileModelDirective',
-    'js/controllers/fileModelCtrl'
-], function (require, attendanceDirective, attendanceController, fileModelDirective, fileModelController) {
+], function (require, attendanceDirective, attendanceController) {
   'use strict';
 
   var angular = require('angular');
@@ -20,9 +18,7 @@ define(['require',
   //services(module);
     attendanceDirective(module);
     attendanceController(module);
-    //fileModelDirective(module);
-    //fileModelController(module);
-  console.log(module);
+    console.log(module);
 
   //module.config(['$routeProvider', function($routeProvider) {
   //      $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: MyCtrl1});

@@ -2144,7 +2144,7 @@ define([], function () {
     var exampleCell = {start: '09:30', end: '18:30'};
     var editableCellTemplate =
         '<div class="ngCellText"><div ng-show="!row.entity.edit">{{row.getProperty(col.field)}}</div>' +
-        '<div ng-show="row.entity.edit" class="ngCellText"><input type="text" ng-model="row.entity.age"/></div></div>';
+        '<div ng-show="row.entity.edit" class="ngCellText"><input type="text" ng-model="row.entity.remark"/></div></div>';
 
     /**
      * code start here
@@ -2158,13 +2158,18 @@ define([], function () {
     var nameCol = {
         field: 'employeeName',
         displayName: '姓名',
-        resizable: true
+        resizable: true,
+        minWidth: 50,
+        maxWidth: 100
     };
     columnDefs.push(nameCol);
     var departmentCol = {
         field: 'departmentName',
         displayName: '部门',
-        resizable: true
+        resizable: true,
+        minWidth: 50,
+        maxWidth: 100,
+        width: 'auto'
     };
     columnDefs.push(departmentCol);
     for(var daynum = 1; daynum<=31; daynum++){ //TODO: get number of days from server
@@ -2172,7 +2177,10 @@ define([], function () {
         var def = {
             field:colName,
             displayName: colName,
-            cellTemplate: '<div class="ngCellText"><div>{{row.entity[$index-2].startTime}}</div><div>{{row.entity[$index-2].endTime}}</div></div>'
+            cellTemplate: '<div class="ngCellText"><div>{{row.entity[$index-2].startTime}}</div><div>{{row.entity[$index-2].endTime}}</div></div>',
+            resizable: true,
+            minWidth: 50,
+            maxWidth: 100
             //cellTemplate: '<div class="ngCellText">{{row.entity[$index+5].startTime}}</div>'
         }
         columnDefs.push(def);

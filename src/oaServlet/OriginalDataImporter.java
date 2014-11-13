@@ -97,7 +97,7 @@ public class OriginalDataImporter extends HttpServlet
 				{
 					
 					importFile = item.getInputStream();
-					//result = importData(importFile);
+					result = importData(importFile);
 					
 				}
 			}

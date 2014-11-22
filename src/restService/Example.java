@@ -23,8 +23,10 @@ import javax.ws.rs.QueryParam;
 import oaEntities.AttendenceList;
 import oaEntities.DayAttendence;
 import oaEntities.ItemAttendence;
+import oaEntities.ResultVal;
 import oaEntities.UserLoginEntity;
 import oaUUM.UserAction;
+import oaUUM.UserAuthenticate;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -66,16 +68,34 @@ public class Example
 		Gson gs = new Gson();
 		UserLoginEntity ule = gs.fromJson(requestJson, UserLoginEntity.class);
 		UserAction ua = new UserAction();
-		return ua.userLogin(ule.getLoginid(), ule.getPassword());
+		String returnString = ua.userLogin(ule.getLoginid(), ule.getPassword());
+		return returnString;
 	}
 	
 	@POST
 	@Path("/logout")
 	@Produces("text/plain; charset=utf-8")
-	public void logout(String accessToken)
+	public String logout(String accessToken)
 	{
 		UserAction ua = new UserAction();
 		ua.userLogout(accessToken);
+		ResultVal retVal = new ResultVal("success","");
+		Gson gson = new Gson();
+		return gson.toJson(retVal);
+	}
+	
+	@POST
+	@Path("/validateUser")
+	@Produces("text/plain; charset=utf-8")
+	public String validateUser(String accessToken)
+	{
+		boolean validateResult = UserAuthenticate.validateUser(accessToken);
+		ResultVal retVal = new ResultVal("success","");
+		if (validateResult == false){
+			retVal = new ResultVal("fail","");
+		}
+		Gson gson = new Gson();
+		return gson.toJson(retVal);
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.UUID;
 
+import oaEntities.ResultVal;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -18,13 +20,15 @@ import com.google.gson.Gson;
 public class UserAction {
 	public String userLogin(String loginName,String password){
 		Connection con = null;
+		Gson gs = new Gson();
+		ResultVal retVal = new ResultVal("fail","用户名密码不正确！");;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://danlihome.wicp.net:3308/OASystem", "danlihome","ld7vd6yt");
+			con = DriverManager.getConnection("jdbc:mysql://192.168.5.101:3306/oasystem", "danlihome","ld7vd6yt");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			Example example = new Example();
-			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where LOGIN_ID = '"+loginName+"'"));
+			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where LOGIN_NAME = '"+loginName+"'"));
 			Document userDoc = DocumentHelper.parseText(userRecordXml);
 			List<Element> userList = userDoc.getRootElement().selectNodes("Record");
 			String passwordDB = "";
@@ -41,11 +45,12 @@ public class UserAction {
 				upi.setPassword(password);
 				upi.setAccessToken(token);
 				UserAuthenticate.setUserLogin(token,upi);
-				Gson gs = new Gson();
-				return gs.toJson(upi);
+				
+				retVal = new ResultVal("success",gs.toJson(upi));
+				
 			}
 			else{
-				return "fail";
+				retVal= new ResultVal("fail","用户名密码不正确！");
 			}
 		
 		}catch (Exception e){
@@ -54,9 +59,12 @@ public class UserAction {
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				retVal= new ResultVal("fail","系统错误，请稍后再试！");
+				
 			}
 			e.printStackTrace();
-			return "fail";
+			retVal= new ResultVal("fail","系统错误，请稍后再试！");
+			
 		}finally {
 			try {
 				if (con != null){
@@ -65,9 +73,11 @@ public class UserAction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "fail";
+				retVal= new ResultVal("fail","系统错误，请稍后再试！");
 			}
+			
 		}
+		return gs.toJson(retVal);
 	}
 	
 	public void userLogout(String accessToken){

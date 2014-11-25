@@ -20,7 +20,7 @@ public class UserAuthenticate {
 
 	private static HashMap<String,UserProfileInfo> userTable= new HashMap<String,UserProfileInfo>();
 	
-	public boolean validateUser(String accessToken){
+	public static boolean validateUser(String accessToken){
 		if (userTable.get(accessToken) == null ){
 			return false;
 		}
@@ -37,7 +37,7 @@ public class UserAuthenticate {
 		return userTable.put(accessToken,userInfo);
 	}
 	
-	public static UserProfileInfo logout(String accessToken){
-		return userTable.remove(accessToken);
+	public static void logout(String accessToken){
+		userTable.remove(accessToken);
 	}
 }

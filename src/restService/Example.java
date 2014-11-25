@@ -447,7 +447,7 @@ public class Example
 			}
 			
 			AttendenceList al = new AttendenceList(month , year, Double.toString(non), iaL);
-			System.out.println(al);
+			System.out.println(al.toString());
 			return gson.toJson(al);
 		}catch (Exception e){
 			try {

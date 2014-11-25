@@ -2177,7 +2177,7 @@ define([], function () {
         var def = {
             field:colName,
             displayName: colName,
-            cellTemplate: '<div class="ngCellText"><div>{{row.entity[$index-2].startTime}}</div><div>{{row.entity[$index-2].endTime}}</div></div>',
+            cellTemplate: '<div class="ngCellText"><div>{{row.entity[col.field].startTime}}</div><div>{{row.entity[col.field].endTime}}</div></div>',
             resizable: true,
             minWidth: 50,
             maxWidth: 100

@@ -16,8 +16,8 @@ define(['../models/attendanceList',
                     $scope.myData = [];
                     $scope.list = { data: 'myData' ,
                         rowHeight: 50,
-                        columnDefs: attendanceList.colDefs
-                        //enableColumnResize : true
+                        columnDefs: attendanceList.colDefs,
+                        enableColumnResize : true
                     };
                     //upload file
                     $scope.uploadFile = function(){

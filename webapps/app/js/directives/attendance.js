@@ -17,7 +17,7 @@ define([], function () {
 
               element.bind('change', function () {
                 scope.$apply(function () {
-                  modelSetter(scope, element[0].childNodes[3].files[0]);
+                  modelSetter(scope, element[0].childNodes[1].files[0]);
                 });
               });
             }

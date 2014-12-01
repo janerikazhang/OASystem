@@ -22,7 +22,7 @@ function checkLogin(){
 				var data = jQuery.parseJSON(data);
 				if (data.flag == "fail"){
 					alert("您尚未登录！");
-					window.location("login.html");
+					window.location="login.html";
 				}
 			},
 			error:function onerror(jqXHR,status,errorString){
@@ -32,7 +32,7 @@ function checkLogin(){
 	}
 	else{
 		alert("您尚未登录！");
-		window.location("login.html");
+		window.location="login.html";
 	}
 }
 
@@ -49,7 +49,7 @@ function logout(){
 			dataType:"text",
 			success:function oncallback(data,status,jqXHR){
 				jQuery.cookie("userInfo","");
-				window.location("login.html");
+				window.location = "login.html";
 			},
 			error:function onerror(jqXHR,status,errorString){
 				alert(errorString);
@@ -58,7 +58,7 @@ function logout(){
 	}
 	else{
 		jQuery.cookie("userInfo","");
-		window.location("login.html");
+		window.location = "login.html";
 	}
 }
 

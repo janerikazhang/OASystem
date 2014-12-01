@@ -1,12 +1,13 @@
+
 function login(){
-	var loginName = jQuery("#loginName").val();
+	var username = jQuery("#username").val();
 	var password = jQuery("#password").val();
 	jQuery.ajax("http://localhost:8080/OASystem/api/login",
 			{
 		async:true,
 		processData: false,
 		type: "post",
-		data: JSON.stringify({'loginid':loginName,'password':password}),
+		data: JSON.stringify({"username":username,'password':password}),
 		dataType:"text",
 		success:function oncallback(data,status,jqXHR){
 			var data = jQuery.parseJSON(data);
@@ -25,7 +26,7 @@ function login(){
 
 function loginSuccess(data){
 	jQuery.cookie("userInfo",data.value);
-	window.location("index.html")
+	window.location = "index.html"
 }
 
 

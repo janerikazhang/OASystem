@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登陆</title>
+<script type = "text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
+<script type = "text/javascript" src="lib/jQueryCookie.js"></script>
+<script type = "text/javascript" src="login.js"></script>
+<link href="../themes/login.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+<form id="login">
+    <h1>Log In</h1>
+    <fieldset id="inputs">
+        <input id="username" type="text" placeholder="Username" autofocus required>
+        <input id="password" type="password" placeholder="Password" required>
+    </fieldset>
+    <fieldset id="actions">
+        <input type="button" id="submit" value="登陆" onclick="login()">
+        <a href="">忘记密码?</a>
+    </fieldset>
+</form>
+</body>
+</html>

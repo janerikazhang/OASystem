@@ -1,21 +1,18 @@
 package oaUUM;
 
+import com.google.gson.Gson;
+import oaEntities.ResultVal;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import restService.Example;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
 import java.util.UUID;
-
-import oaEntities.ResultVal;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.Node;
-
-import restService.Example;
-
-import com.google.gson.Gson;
 
 public class UserAction {
 	public String userLogin(String loginName,String password){
@@ -24,11 +21,11 @@ public class UserAction {
 		ResultVal retVal = new ResultVal("fail","用户名密码不正确！");;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://192.168.5.101:3306/oasystem", "danlihome","ld7vd6yt");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/oasystem", "devuser","dev_user123");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			Example example = new Example();
-			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where LOGIN_NAME = '"+loginName+"'"));
+			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where username = '"+loginName+"'"));
 			Document userDoc = DocumentHelper.parseText(userRecordXml);
 			List<Element> userList = userDoc.getRootElement().selectNodes("Record");
 			String passwordDB = "";

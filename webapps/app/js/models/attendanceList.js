@@ -2168,8 +2168,7 @@ define([], function () {
         displayName: '部门',
         resizable: true,
         minWidth: 50,
-        maxWidth: 100,
-        width: 'auto'
+        maxWidth: 100
     };
     columnDefs.push(departmentCol);
     for(var daynum = 1; daynum<=31; daynum++){ //TODO: get number of days from server

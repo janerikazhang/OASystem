@@ -1,21 +1,21 @@
 package oaEntities;
 
 public class UserLoginEntity {
-	private String loginid;
+	private String username;
 	private String password;
 	
-	public UserLoginEntity(String loginid, String password) {
+	public UserLoginEntity(String username, String password) {
 		super();
-		this.loginid = loginid;
+		this.username = username;
 		this.password = password;
 	}
 
-	public String getLoginid() {
-		return loginid;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLoginid(String loginid) {
-		this.loginid = loginid;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

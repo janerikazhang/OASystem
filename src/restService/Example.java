@@ -9,16 +9,12 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 import oaEntities.AttendenceList;
 import oaEntities.DayAttendence;
@@ -68,7 +64,7 @@ public class Example
 		Gson gs = new Gson();
 		UserLoginEntity ule = gs.fromJson(requestJson, UserLoginEntity.class);
 		UserAction ua = new UserAction();
-		String returnString = ua.userLogin(ule.getLoginid(), ule.getPassword());
+		String returnString = ua.userLogin(ule.getUsername(), ule.getPassword());
 		return returnString;
 	}
 	
@@ -124,7 +120,7 @@ public class Example
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://danlihome.wicp.net:3308/OASystem", "danlihome","ld7vd6yt");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/OASystem", "devuser","dev_user123");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			

@@ -13,7 +13,7 @@ define(['require',
   //var directives = require('directives/attendance');
   //var controllers = require('controllers');
   // Declare app level module which depends on filters, and services
-  var module = angular.module('myapp', ['ngGrid']);
+  var module = angular.module('myapp', ['ui.grid']);
   //filters(module);
   //services(module);
     attendanceDirective(module);

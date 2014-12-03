@@ -120,7 +120,7 @@ public class Example
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/OASystem", "devuser","dev_user123");
+			con = DriverManager.getConnection("jdbc:mysql://192.168.5.98:3306/OASystem", "danlihome","ld7vd6yt");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			
@@ -206,7 +206,7 @@ public class Example
 						    		Date date2 = sdf2.parse(time);
 						    		int c = date2.compareTo(dayA.get(dayA.size()-1).getOutHour());
 						    		if (c>=0){
-						    			item = new DayAttendence(date1, null, null, isHoliday, false, false, "", "");
+						    			item = new DayAttendence(date1, null, null, isHoliday, true, true, "1", "1");
 						    		}
 						    		else{
 						    			//todo:判断是否入职
@@ -299,10 +299,10 @@ public class Example
 						    	}
 						    	int c1 = date1.compareTo(date4);
 						    	if (c1<0){
-						    		item = new DayAttendence(date3, null, date1, isHoliday, true, true, "3", "1");
+						    		item = new DayAttendence(date3, null, date1, isHoliday, true, true, "1", "3");
 						    	}
 						    	else{
-						    		item = new DayAttendence(date3, null, date1, isHoliday, true, false, "", "1");
+						    		item = new DayAttendence(date3, null, date1, isHoliday, true, false, "1", "");
 						    	}
 						    }
 						}
@@ -359,7 +359,7 @@ public class Example
 						    int c1 = date1.compareTo(date4);
 						    int c2 = date2.compareTo(date5);
 					    	if (c1<=0 && c2<0){
-					    		item = new DayAttendence(date3, date1, date2, isHoliday, false, true, dayList.get(0).selectSingleNode("SPECIAL_TYPE").getText(), "3");
+					    		item = new DayAttendence(date3, date1, date2, isHoliday, false, true,dayList.get(0).selectSingleNode("SPECIAL_TYPE").getText(),"3");
 					    	}
 					    	else if (c1<= 0 && c2>=0){
 					    		item = new DayAttendence(date3, date1, date2, isHoliday, false, false, dayList.get(0).selectSingleNode("SPECIAL_TYPE").getText(), dayList.get(dayList.size()-1).selectSingleNode("SPECIAL_TYPE").getText());
@@ -368,7 +368,7 @@ public class Example
 					    		item = new DayAttendence(date3, date1, date2, isHoliday, true, true, "2", "3");
 					    	}
 					    	else{
-					    		item = new DayAttendence(date3, date1, date2, isHoliday, true, false, "2", dayList.get(dayList.size()-1).selectSingleNode("SPECIAL_TYPE").getText());
+					    		item = new DayAttendence(date3, date1, date2, isHoliday, true, false,  "2",dayList.get(dayList.size()-1).selectSingleNode("SPECIAL_TYPE").getText());
 					    	}
 						}
 						dayA.add(item);
@@ -413,10 +413,10 @@ public class Example
 								isFull930 = false;
 							}
 						}
-						if (dayA.get(j).getASpecialType().equalsIgnoreCase("1") || dayA.get(j).getASpecialType().equalsIgnoreCase("2") || dayA.get(j).getASpecialType().equalsIgnoreCase("3")){
+						if (dayA.get(j).getIsHoliday()== false && (dayA.get(j).getASpecialType().equalsIgnoreCase("1") || dayA.get(j).getASpecialType().equalsIgnoreCase("2") || dayA.get(j).getASpecialType().equalsIgnoreCase("3"))){
 							numOfSpecial++;
 						}
-						if (dayA.get(j).getMSpecialType().equalsIgnoreCase("1") || dayA.get(j).getMSpecialType().equalsIgnoreCase("2") || dayA.get(j).getMSpecialType().equalsIgnoreCase("3")){
+						if (dayA.get(j).getIsHoliday()== false && ( dayA.get(j).getMSpecialType().equalsIgnoreCase("1") || dayA.get(j).getMSpecialType().equalsIgnoreCase("2") || dayA.get(j).getMSpecialType().equalsIgnoreCase("3"))){
 							numOfSpecial++;
 						}
 						if (dayA.get(j).getASpecialType().equalsIgnoreCase("0") && dayA.get(j).getInHour() != null){
@@ -463,7 +463,7 @@ public class Example
 			}
 			
 			AttendenceList al = new AttendenceList(month , year, Double.toString(non), iaL);
-			System.out.println(al.toString());
+			System.out.println(gson.toJson(al));
 			return gson.toJson(al);
 		}catch (Exception e){
 			try {

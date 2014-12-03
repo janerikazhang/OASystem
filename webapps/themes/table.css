@@ -1,0 +1,111 @@
+.DivEmployeeCount {
+	width: 15%;
+	height: 60px;
+	line-height: 60px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	float: left
+}
+
+.DivEmployeeName {
+	width: 40%;
+	height: 60px;
+	line-height: 60px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	float: left
+}
+
+.DivDepartment {
+	width: 43%;
+	height: 60px;
+	line-height: 60px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	float: left
+}
+
+.DivEmployeeCountTitle {
+	width: 15%;
+	height: 30px;
+	line-height: 30px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	float: left
+}
+
+.DivEmployeeNameTitle {
+	width: 40%;
+	height: 30px;
+	line-height: 30px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	float: left
+}
+
+.DivDepartmentTitle {
+	width: 43%;
+	height: 30px;
+	line-height: 30px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-color: black;
+	text-align: center;
+	border-width: 1px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	float: left
+}
+
+.tdTop{
+	height:24px;
+	line-height:24px;
+}
+
+.tdBottom{
+	height:24px;
+	line-height:24px;
+	border-top-style:solid;
+	border-width:1px;
+	border-color:black
+}
+.trContent{
+	height:60px;
+}
+
+
+.table_border {
+	height: 100%;
+	width: 4210px;
+}
+
+.table_border td{
+	text-align:center;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>table</title>
+    <meta charset="UTF-8">
+    <script type = "text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script type = "text/javascript" src="table.js"></script>
+    <link href="../themes/table.css" rel="stylesheet" type="text/css" media="all">
+    <script>
+    jQuery(document).ready(function(){
+    	jQuery("#content_right").css("width",document.body.clientWidth-310+"px");
+    	jQuery.ajax("http://localhost:8080/OASystem/api/attendenceResult",
+    			{
+    		async:true,
+    		processData: false,
+    		type: "get",
+    		dataType:"text",
+    		success:function oncallback(data,status,jqXHR){
+    			var data = jQuery.parseJSON(data);
+    			renderTable(data)
+    			jQuery('#fullday').html("本月全勤应为"+data.fullDays+"天");
+    			jQuery('#date').html("日期："+data.yearOdAttendence+"年"+data.monthOdAttendence+"月");
+    		},
+    		error:function onerror(jqXHR,status,errorString){
+    			alert(errorString);
+    		}
+    	});
+    	
+    })
+    
+    </script>
+</head>
+
+<body>
+<div id ='content'>
+<div style='height:20px'>
+<span id = 'date'>日期：2014年9月</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id= 'fullday'>本月全勤应为28天</span>
+</div>
+<div id = 'content_left' style = 'width:300px;float:left;height:100%'>
+
+<div name = "row">
+<div name = 'counter' class='DivEmployeeCountTitle'>序号</div>
+<div name = 'employeeName' class='DivEmployeeNameTitle'>姓名</div>
+<div name = 'department' class='DivDepartmentTitle'>部门</div>
+</div>
+</div>
+<div id = 'content_right' style = 'float:left;height:100%;overflow:auto;'>
+<table id = 'tableContent' class = 'table_border' border="1" cellpadding="2" cellspacing="1">
+<tr style = 'height:28px'>
+<th style = 'width:100px'>1</th>
+<th style = 'width:100px'>2</th>
+<th style = 'width:100px'>3</th>
+<th style = 'width:100px'>4</th>
+<th style = 'width:100px'>5</th>
+<th style = 'width:100px'>6</th>
+<th style = 'width:100px'>7</th>
+<th style = 'width:100px'>8</th>
+<th style = 'width:100px'>9</th>
+<th style = 'width:100px'>10</th>
+<th style = 'width:100px'>11</th>
+<th style = 'width:100px'>12</th>
+<th style = 'width:100px'>13</th>
+<th style = 'width:100px'>14</th>
+<th style = 'width:100px'>15</th>
+<th style = 'width:100px'>16</th>
+<th style = 'width:100px'>17</th>
+<th style = 'width:100px'>18</th>
+<th style = 'width:100px'>19</th>
+<th style = 'width:100px'>20</th>
+<th style = 'width:100px'>21</th>
+<th style = 'width:100px'>22</th>
+<th style = 'width:100px'>23</th>
+<th style = 'width:100px'>24</th>
+<th style = 'width:100px'>25</th>
+<th style = 'width:100px'>26</th>
+<th style = 'width:100px'>27</th>
+<th style = 'width:100px'>28</th>
+<th style = 'width:100px'>29</th>
+<th style = 'width:100px'>30</th>
+<th style = 'width:100px'>31</th>
+<th style = 'width:200px'>迟到早退漏打卡</th>
+<th style = 'width:50px'>年假</th>
+<th style = 'width:50px'>旷工</th>
+<th style = 'width:50px'>事假</th>
+<th style = 'width:50px'>病假</th>
+<th style = 'width:200px'>实际上班天数</th>
+<th style = 'width:80px'>勤奋奖</th>
+<th style = 'width:80px'>全勤奖</th>
+<th style = 'width:300px'>备注</th>
+<th style = 'width:50px'>扣款</th>
+</tr>
+</table>
+</div>
+</div>
+</body>
+</html>

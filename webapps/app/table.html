@@ -9,6 +9,7 @@
     <script>
     jQuery(document).ready(function(){
     	jQuery("#content_right").css("width",document.body.clientWidth-310+"px");
+    	
     	jQuery.ajax("http://localhost:8080/OASystem/api/attendenceResult",
     			{
     		async:true,
@@ -34,14 +35,14 @@
 <body>
 <div id ='content'>
 <div style='height:20px'>
-<span id = 'date'>日期：2014年9月</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id= 'fullday'>本月全勤应为28天</span>
+<span id = 'date'>日期：___年___月</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id= 'fullday'>本月全勤应为___天</span>
 </div>
 <div id = 'content_left' style = 'width:300px;float:left;height:100%'>
 
 <div name = "row">
-<div name = 'counter' class='DivEmployeeCountTitle'>序号</div>
-<div name = 'employeeName' class='DivEmployeeNameTitle'>姓名</div>
-<div name = 'department' class='DivDepartmentTitle'>部门</div>
+<div name = 'counter' class='DivEmployeeCountTitle'><b>序号</b></div>
+<div name = 'employeeName' class='DivEmployeeNameTitle'><b>姓名</b></div>
+<div name = 'department' class='DivDepartmentTitle'><b>部门</b></div>
 </div>
 </div>
 <div id = 'content_right' style = 'float:left;height:100%;overflow:auto;'>

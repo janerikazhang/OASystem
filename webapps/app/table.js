@@ -1,4 +1,3 @@
-
 function renderTable(obj) {
 	if (obj.listItems) {
 		var counter = 0;

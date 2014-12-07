@@ -1,12 +1,40 @@
-div#container{
-    width:100%; height: 100%; margin:0 auto;
+div#container {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
     text-align: left;
-    border:1px solid #a8bbbb;
+    border: 1px solid #a8bbbb;
 }
-div#header {width:100%; height: 10%; margin-top: 0;
+
+div#header {
+    width: 100%;
+    height: 10%;
+    margin-top: 0;
     border-bottom: #FFAE00 3px solid;
 }
-div#menu {background-color:#FFFFED;height:100%;width:20%;float:left; padding-bottom: 500px}
+
+div#menu {
+    background-color: #FFFFED;
+    height: 100%;
+    width: 10%;
+    float: left;
+    padding-bottom: 638px
+}
+
+div#menu ul li {
+    padding: 30px;
+}
+
+div#menu ul li:hover {
+    background: #fefffe;
+}
+
+div#menu ul {
+    margin-left: 0;
+    margin-top: 0;
+    padding-left: 0;
+}
+
 div#content {
     background-color: #fff;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
@@ -15,11 +43,54 @@ div#content {
     background-image: -ms-linear-gradient(top, #fff, #eee);
     background-image: -o-linear-gradient(top, #fff, #eee);
     background-image: linear-gradient(top, #fff, #eee);
-    height:100%;width:80%;float:left;
-    padding-bottom: 585px;
+    height: 100%;
+    width: 90%;
+    float: left;
 }
-div#footer {background-color:#99bbbb;clear:both;text-align:center;}
-h1 {margin-bottom:0;}
-h2 {margin-bottom:0;font-size:18px;}
-ul {margin:0;}
-li {list-style:none;}
+
+div#footer {
+    background-color: #99bbbb;
+    clear: both;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+ul {
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+iframe#attendanceTable {
+    width: 100%;
+    height: 100%;
+}
+
+div#myOrganization {
+    margin-right: 4px;
+    height: 741px;
+}
+
+div#logout {
+    padding-left: 90%;
+}
+
+#top {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-left: 40px solid #00F;
+    border-bottom: 40px solid #FFF;
+    border-right: 40px solid #FFF;
+    border-top: 40px solid #FFF;
+}

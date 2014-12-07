@@ -20,24 +20,29 @@
 
     <div id="header">
         <h1>Staff Functions</h1>
-        <input type = "button" value="Check Cookie" onclick = "check();"/>
-        <input type = "button" value="登出" onclick = "logout();"/>
+        <div id="logout">
+            <input type = "button" value="Check Cookie" onclick = "check();"/>
+            <input type = "button" value="登出" onclick = "logout();"/>
+        </div>
     </div>
-
+    <div id="ContentBox">
     <div id="menu">
-        <h2>Menu</h2>
+        <!--<h2>Menu</h2>-->
         <ul>
-            <li>我的请假</li>
+            <li>我的请假<span id="top"></span></li>
             <li>我的加班</li>
             <li>我的组织</li>
         </ul>
     </div>
 
     <div id="content">
-        <attendance-table> </attendance-table>
+        <div id="myOrganization">
+            <iframe id="attendanceTable" src="table.html"></iframe>
+            <!--<attendance-table></attendance-table>-->
+        </div>
     </div>
-
-    <div id="footer">火烈鸟网络科技有限公司</div>
+</div>
+<div id="footer">火烈鸟网络科技有限公司</div>
 
 </div>
 

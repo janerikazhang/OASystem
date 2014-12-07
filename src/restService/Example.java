@@ -120,7 +120,7 @@ public class Example
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://192.168.5.98:3306/OASystem", "danlihome","ld7vd6yt");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/OASystem", "devuser","dev_user123");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			

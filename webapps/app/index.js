@@ -61,3 +61,16 @@ function logout(){
 		window.location = "login.html";
 	}
 }
+
+function gotoAttendance() {
+	$("#attendanceTable").attr("src", "table.html");
+}
+
+function gotoSysConfig() {
+	$("#attendanceTable").attr("src", "config.html");
+}
+
+function gotoUserMngmt() {
+//	$("#attendanceTable").attr("src", "table.html");
+	alert("not implemented");
+}

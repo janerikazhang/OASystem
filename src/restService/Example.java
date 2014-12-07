@@ -108,8 +108,8 @@ public class Example
 		String month = requestJson.getString("month");
 		String holidayString = "";
 		String arrengement = "";
-		String daySeprater = "07:00:00";//日分割时间
-		String midSeprater = "12:30:00";//中午分割时间
+		String daySaparator = "07:00:00";//日分割时间
+		String midSeparator = "12:30:00";//中午分割时间
 		String late1 = "10:00:00";//头一天工作到leave1，第二天迟到时间推迟到late1
 		String priceTime = "21:30:00";//获奖的离开工作时间
 		String late2 = "14:00:00";//头一天工作到leave2，第二天迟到时间推迟到late2
@@ -174,14 +174,14 @@ public class Example
 					for (int i = 1;i<=numOfDay;i++){
 						String dayRecord = "";
 						if (i != numOfDay){
-							dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+year+"-"+month+"-"+Integer.toString(i+1)+" "+daySeprater+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySeprater+"' order by ATTENDENCE_TIME"));
+							dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+year+"-"+month+"-"+Integer.toString(i+1)+" "+daySaparator+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySaparator+"' order by ATTENDENCE_TIME"));
 						}
 						else{
 							if (month.equalsIgnoreCase("12")){
-								dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+Integer.toString(Integer.parseInt(year)+1)+"-"+"1-1"+" "+daySeprater+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySeprater+"' order by ATTENDENCE_TIME"));
+								dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+Integer.toString(Integer.parseInt(year)+1)+"-"+"1-1"+" "+daySaparator+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySaparator+"' order by ATTENDENCE_TIME"));
 							}
 							else{
-								dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+year+"-"+Integer.toString(Integer.parseInt(month)+1)+"-1 "+daySeprater+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySeprater+"' order by ATTENDENCE_TIME"));
+								dayRecord = generateXML(statamentMySQL.executeQuery("select * from oa_attendence where USER_NAME = '"+user+"' AND ATTENDENCE_TIME < '"+year+"-"+Integer.toString(Integer.parseInt(month)+1)+"-1 "+daySaparator+"' AND ATTENDENCE_TIME >'"+year+"-"+month+"-"+Integer.toString(i)+" "+daySaparator+"' order by ATTENDENCE_TIME"));
 							}
 						}
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
@@ -247,7 +247,7 @@ public class Example
 							String time = dayList.get(0).selectSingleNode("ATTENDENCE_TIME").getText();
 							SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 						    Date date1 = sdf1.parse(time);
-						    String midTime = year+"-"+month+"-"+Integer.toString(i)+" "+midSeprater;
+						    String midTime = year+"-"+month+"-"+Integer.toString(i)+" "+midSeparator;
 						    Date date2 = sdf1.parse(midTime);
 						    int c = date1.compareTo(date2);
 						    if (c<0){

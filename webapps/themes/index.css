@@ -84,13 +84,3 @@ div#myOrganization {
 div#logout {
     padding-left: 90%;
 }
-
-#top {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    border-left: 40px solid #00F;
-    border-bottom: 40px solid #FFF;
-    border-right: 40px solid #FFF;
-    border-top: 40px solid #FFF;
-}

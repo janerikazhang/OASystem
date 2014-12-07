@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script type = "text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery-ui-1.10.4.custom.min.js"></script>
+    <link href="css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        jQuery(document).ready(function() {
+
+            $("#holidaypicker").datepicker();
+            $("#holidaypicker").datepicker("option", "dateFormat", "yy-mm");
+        });
+        function saveConfig () {
+            var systemConfig = {
+                daySeparator: $("#daySeparator").val(),
+                midSeparator: $("#midSeparator").val(),
+                late: $("#late").val(),
+                early: $("#early").val(),
+                earlySat: $("#earlySat").val(),
+                late1: $("#late1").val(),
+                late2: $("#late2").val(),
+                leave1: $("#leave1").val(),
+                leave2: $("#leave2").val(),
+                priceTime: $("#priceTime").val(),
+                holiday: $("#holiday").val(),
+                arrangement: $("#arrangement").val(),
+                satWork: $("#satWork").val(),
+                year: $("#holidayPicker").val().split("-")[0],
+                month: $("#holidayPicker").val().split("-")[1]
+            }
+            jQuery.ajax("http://localhost:8080/OASystem/api/systemConfig",
+                    {
+                        async:true,
+                        processData: false,
+                        type: "post",
+                        data: JSON.stringify(systemConfig),
+                        dataType:"text",
+                        success:function oncallback(data,status,jqXHR){
+                            var response = $.parseJason(data);
+                            if(response.flag == "success") {
+                                alert("保存成功");
+                            }
+                            else {
+                                alert("保存失败")
+                            }
+                        },
+                        error:function onerror(jqXHR,status,errorString){
+                            alert(errorString);
+                        }
+                    });
+        }
+    </script>
+</head>
+<body>
+<table>
+<tr><td><span>工作日分界线</span></td><td><input id="daySeparator" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>中午分界线</span></td><td><input id="midSeparator" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>标准上班时间</span></td><td><input id="late" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>标准下班时间</span></td><td><input id="early" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>周六半天下班时间</span></td><td><input id="earlySat" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>当符合晚离开时间1，则推迟的迟到分界线1</span></td><td><input id="late1" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>当符合晚离开时间2，则推迟的迟到分界线2</span></td><td><input id="late2" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>晚离开时间1</span></td><td><input id="leave1" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>晚离开时间2</span></td><td><input id="leave2" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>晚上工作奖励分界线</span></td><td><input id="priceTime" type="text" placeholder="00:00:00"/></td></tr>
+<tr><td><span>假期，调休，大小周</span></td><td><input id="holidaypicker" type="text" readonly/>放假日期<input id="holiday" type="text" title="逗号分隔"/>调休日期<input id="arrangement" type="text" title="逗号分隔"/>周六上班日期<input id="satWork" type="text" title="逗号分隔"/></td></tr>
+</table>
+
+<div id="configSave"><input type="button" value="保存" onclick="saveConfig()"/></div>
+</body>
+</html>

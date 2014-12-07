@@ -7,11 +7,157 @@
     <meta charset="UTF-8">
     <title></title>
     <script>
+    
+    Date.prototype.format = function(fmt) 
+    { //author: meizz 
+      var o = { 
+        "M+" : this.getMonth()+1,                 //月份 
+        "d+" : this.getDate(),                    //日 
+        "h+" : this.getHours(),                   //小时 
+        "m+" : this.getMinutes(),                 //分 
+        "s+" : this.getSeconds(),                 //秒 
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+        "S"  : this.getMilliseconds()             //毫秒 
+      }; 
+      if(/(y+)/.test(fmt)) 
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+      for(var k in o) 
+        if(new RegExp("("+ k +")").test(fmt)) 
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length))); 
+      return fmt; 
+    }
+    
+    
+    
+    
+    
         jQuery(document).ready(function() {
 
             $("#holidaypicker").datepicker();
             $("#holidaypicker").datepicker("option", "dateFormat", "yy-mm");
+            $("#holidaypicker").val(new Date().format("yyyy-MM"));
+            
+            initSystemconfig();
+            loadHoliday();
+            
+            
+            
         });
+        
+        function loadHoliday(){
+        	var obj  = {
+                	year: $("#holidaypicker").val().split("-")[0],
+                    month: $("#holidaypicker").val().split("-")[1]
+                	}
+                	jQuery.ajax("http://localhost:8080/OASystem/api/holodayConfig",
+                            {
+                                async:true,
+                                processData: false,
+                                type: "post",
+                                data: JSON.stringify(obj),
+                                dataType:"text",
+                                success:function oncallback(data,status,jqXHR){
+                                    var response = $.parseJSON(data);
+                                    if(response.flag == "success") {
+                                        response = $.parseJSON(response.value);
+                                        $("#holiday").val(response.holiday);
+                                        $("#satWork").val(response.satWork);
+                                        $("#arrangement").val(response.arrangement);
+                                        
+                                    }
+                                    else {
+                                        
+                                    }
+                                },
+                                error:function onerror(jqXHR,status,errorString){
+                                    alert(errorString);
+                                }
+                            });
+                	
+                	
+                	
+        }
+        
+        function initSystemconfig(){
+        	jQuery.ajax("http://localhost:8080/OASystem/api/systemConfig",
+                    {
+                        async:true,
+                        processData: false,
+                        type: "get",
+                        dataType:"text",
+                        success:function oncallback(data,status,jqXHR){
+                            var response = $.parseJSON(data);
+                            if (response.flag == 'success'){
+                            	response = $.parseJSON(response.value);
+                            }
+                            if (response.daySeparator && response.daySeparator != ""){
+                            	$("#daySeparator").val(response.daySeparator);
+                            }
+                            else{
+                            	$("#daySeparator").val("07:00:00");
+                            }
+                            if (response.midSeparator && response.midSeparator != ""){
+                            	$("#midSeparator").val(response.midSeparator);
+                            }
+                            else{
+                            	$("#midSeparator").val("12:30:00");
+                            }
+                            if (response.late && response.late != ""){
+                            	$("#late").val(response.late);
+                            }
+                            else{
+                            	$("#late").val("09:30:00");
+                            }
+                            if (response.early && response.early != ""){
+                            	$("#early").val(response.early);
+                            }
+                            else{
+                            	$("#early").val("18:30:00");
+                            }
+                            if (response.earlySat && response.earlySat != ""){
+                            	$("#earlySat").val(response.earlySat);
+                            }
+                            else{
+                            	$("#earlySat").val("14:00:00");
+                            }
+                            if (response.late1 && response.late1 != ""){
+                            	$("#late1").val(response.late1);
+                            }
+                            else{
+                            	$("#late1").val("10:00:00");
+                            }
+                            if (response.late2 && response.late2 != ""){
+                            	$("#late2").val(response.late2);
+                            }
+                            else{
+                            	$("#late2").val("14:00:00");
+                            }
+                            if (response.leave1 && response.leave1 != ""){
+                            	$("#leave1").val(response.leave1);
+                            }
+                            else{
+                            	$("#leave1").val("22:30:00");
+                            }
+                            if (response.leave2 && response.leave2 != ""){
+                            	$("#leave2").val(response.leave2);
+                            }
+                            else{
+                            	$("#leave2").val("02:00:00");
+                            }
+                            if (response.priceTime && response.priceTime != ""){
+                            	$("#priceTime").val(response.priceTime);
+                            }
+                            else{
+                            	$("#priceTime").val("21:30:00");
+                            }
+                        },
+                        error:function onerror(jqXHR,status,errorString){
+                            alert(errorString);
+                        }
+                    });
+        	
+        }
+        
         function saveConfig () {
             var systemConfig = {
                 daySeparator: $("#daySeparator").val(),
@@ -27,8 +173,8 @@
                 holiday: $("#holiday").val(),
                 arrangement: $("#arrangement").val(),
                 satWork: $("#satWork").val(),
-                year: $("#holidayPicker").val().split("-")[0],
-                month: $("#holidayPicker").val().split("-")[1]
+                year: $("#holidaypicker").val().split("-")[0],
+                month: $("#holidaypicker").val().split("-")[1]
             }
             jQuery.ajax("http://localhost:8080/OASystem/api/systemConfig",
                     {
@@ -38,7 +184,7 @@
                         data: JSON.stringify(systemConfig),
                         dataType:"text",
                         success:function oncallback(data,status,jqXHR){
-                            var response = $.parseJason(data);
+                            var response = $.parseJSON(data);
                             if(response.flag == "success") {
                                 alert("保存成功");
                             }
@@ -65,7 +211,7 @@
 <tr><td><span>晚离开时间1</span></td><td><input id="leave1" type="text" placeholder="00:00:00"/></td></tr>
 <tr><td><span>晚离开时间2</span></td><td><input id="leave2" type="text" placeholder="00:00:00"/></td></tr>
 <tr><td><span>晚上工作奖励分界线</span></td><td><input id="priceTime" type="text" placeholder="00:00:00"/></td></tr>
-<tr><td><span>假期，调休，大小周</span></td><td><input id="holidaypicker" type="text" readonly/>放假日期<input id="holiday" type="text" title="逗号分隔"/>调休日期<input id="arrangement" type="text" title="逗号分隔"/>周六上班日期<input id="satWork" type="text" title="逗号分隔"/></td></tr>
+<tr><td><span>假期，调休，大小周</span></td><td><input id="holidaypicker" type="text" readonly onchange="loadHoliday()"/>放假日期<input id="holiday" type="text" title="逗号分隔"/>调休日期<input id="arrangement" type="text" title="逗号分隔"/>周六上班日期<input id="satWork" type="text" title="逗号分隔"/></td></tr>
 </table>
 
 <div id="configSave"><input type="button" value="保存" onclick="saveConfig()"/></div>

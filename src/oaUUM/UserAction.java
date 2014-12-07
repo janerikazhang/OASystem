@@ -21,11 +21,11 @@ public class UserAction {
 		ResultVal retVal = new ResultVal("fail","用户名密码不正确！");;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/oasystem", "devuser","dev_user123");
+			con = DriverManager.getConnection("jdbc:mysql://danlihome.wicp.net:3308/oasystem", "danlihome","ld7vd6yt");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			Example example = new Example();
-			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where username = '"+loginName+"'"));
+			String userRecordXml = example.generateXML(statamentMySQL.executeQuery("select PASSWORD from oa_uum_user where login_id = '"+loginName+"'"));
 			Document userDoc = DocumentHelper.parseText(userRecordXml);
 			List<Element> userList = userDoc.getRootElement().selectNodes("Record");
 			String passwordDB = "";

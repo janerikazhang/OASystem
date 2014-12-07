@@ -61,7 +61,3 @@ function logout(){
 		window.location = "login.html";
 	}
 }
-
-window.onunload = function() { 
-	jQuery.cookie("userInfo","");
-} 

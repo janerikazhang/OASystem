@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import net.sf.json.JSONObject;
 import oaEntities.AttendenceList;
 import oaEntities.DayAttendence;
 import oaEntities.ItemAttendence;
@@ -95,32 +96,34 @@ public class Example
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GET
+	@POST
 	@Path("/attendenceResult")
 	@Produces("text/plain; charset=utf-8")
-	public String getAttendenceResult()
+	public String getAttendenceResult(String jsonRequest)
 	{
+		JSONObject requestJson = JSONObject.fromObject(jsonRequest);
+		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		String year = "2014";
-		String month = "10";
+		String year = requestJson.getString("year");
+		String month = requestJson.getString("month");
 		String holidayString = "";
 		String arrengement = "";
-		String daySeprater = "07:00:00";
-		String midSeprater = "12:30:00";
-		String late1 = "10:00:00";
-		String priceTime = "21:30:00";
-		String late2 = "14:00:00";
-		String leave1 = "22:30:00";
-		String leave2 = "02:00:00";
-		String late = "09:30:00";
-		String early = "18:30:00";
-		String earlySat = "14:00:00";
-		String satWork = "";
+		String daySeprater = "07:00:00";//日分割时间
+		String midSeprater = "12:30:00";//中午分割时间
+		String late1 = "10:00:00";//头一天工作到leave1，第二天迟到时间推迟到late1
+		String priceTime = "21:30:00";//获奖的离开工作时间
+		String late2 = "14:00:00";//头一天工作到leave2，第二天迟到时间推迟到late2
+		String leave1 = "22:30:00";//头一天离开时间leave1
+		String leave2 = "02:00:00";//头一天离开时间leave2
+		String late = "09:30:00";//标准迟到时间
+		String early = "18:30:00";//标准早退时间
+		String earlySat = "14:00:00";//周六半天早退时间
+		String satWork = "";//周六工作日
 		int numOfDay = 30;
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/OASystem", "devuser","dev_user123");
+			con = DriverManager.getConnection("jdbc:mysql://danlihome.wicp.net:3308/OASystem", "danlihome","ld7vd6yt");
 			Statement statamentMySQL = con.createStatement();
 			con.setAutoCommit(false);
 			

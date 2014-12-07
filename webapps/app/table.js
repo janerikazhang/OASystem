@@ -208,3 +208,93 @@ function renderTable(obj) {
 	}
 
 }
+
+
+
+function importData() {
+	if (jQuery('#divUploadFile').length == 0){
+		createDiv();
+	}
+	jQuery("#divUploadFile").dialog({
+		bgiframe : true,
+		title : "attendence excel",
+		closeOnEscape : false,
+		draggable : true,
+		modal : true,
+		resizable : true,
+		width : 724,
+		height : "auto",
+		buttons : {
+			"Close" : function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+}
+
+function createDiv(){
+	
+	var uploadDiv = $("<div></div>");
+	uploadDiv.attr("id", "divUploadFile");
+	uploadDiv.css("display", "");
+	uploadDiv.appendTo("body");
+
+	var preFormDiv = $("<div></div>");
+	preFormDiv.addClass('');
+	preFormDiv.appendTo(uploadDiv);
+
+	var preForm = $("<form></form>");
+	preForm.attr({
+		"id" : "form_portrait",
+		"action" : "../../OASystem/servlet/OriginalDataImporter",
+		"method" : "POST",
+		"enctype" : "multipart/form-data"
+	});
+	preForm.appendTo(preFormDiv);
+
+	var uploadTab = $("<table></table>");
+	uploadTab.css("width", "100%");
+	uploadTab.appendTo(preForm);
+
+	var tr = $("<tr></tr>");
+	tr.appendTo(uploadTab);
+
+	var th = $("<th width='160px'></th>");
+	th.appendTo(tr);
+
+	var td = $("<td></td>");
+	td.appendTo(tr);
+
+	var fileInput = $("<input></input>");
+	fileInput.attr({
+		"type" : "file",
+		"name" : "img",
+		"id" : "f_portrait",
+		"size" : "30"
+	});
+	fileInput.css({"margin-top":"5px"});
+	fileInput.appendTo(td);
+
+	var fileBtn = $("<input></input>");
+	fileBtn.attr({
+		"type" : "submit",
+		"id" : "btn_preview",
+		"value" : "upload"
+	});
+	fileBtn.css("padding", "0 20px");
+	fileBtn.addClass("button");
+	fileBtn.appendTo(td);
+
+	$('#form_portrait').ajaxForm({
+		dataType : 'json',
+		success : function(json) {
+			if (json.content) {
+				alert(json.content);
+				jQuery("#divUploadFile").dialog("close");
+			}
+		}
+	});
+
+
+}
+

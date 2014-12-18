@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import oaEntities.AttendenceList;
 import oaEntities.DayAttendence;
@@ -50,11 +52,100 @@ public class Example {
 	 * @param requestStr
 	 * @return
 	 */
-	@GET
+	@POST
 	@Path("/helloworld")
 	@Produces("text/plain; charset=utf-8")
-	public String getClueList() {
-		return "{\"returnString\":\"hello world\"}";
+	public String getClueList(String requestJson) throws Exception {
+		//JSONObject jo = JSONObject.fromObject(requestJson);
+		
+		ResultVal retVal = new ResultVal("success", "");
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://danlihome.wicp.net:3308/OASystem",
+					"danlihome", "ld7vd6yt");
+			Statement statamentMySQL = con.createStatement();
+			con.setAutoCommit(true);
+			String configXml = generateXML(statamentMySQL
+					.executeQuery("select * from oa_attendence"));
+			Document doc = DocumentHelper.parseText(configXml);
+			List<Node> configList = doc.getRootElement().selectNodes("Record");
+			JSONArray rows = new JSONArray();
+			for (Node row : configList){
+				JSONObject rowObj = new JSONObject();
+				if (row.selectSingleNode("USER_NAME") != null){
+					rowObj.put("UserName", row.selectSingleNode("USER_NAME").getText());
+				}
+				else{
+					rowObj.put("UserName", "");
+				}
+				if (row.selectSingleNode("GROUP_NAME") != null){
+					rowObj.put("DepartmentName", row.selectSingleNode("GROUP_NAME").getText());
+				}
+				else{
+					rowObj.put("DepartmentName", "");
+				}
+				if (row.selectSingleNode("ATTENDENCE_TIME") != null){
+					rowObj.put("DateTime", row.selectSingleNode("ATTENDENCE_TIME").getText());
+				}
+				else{
+					rowObj.put("DateTime", "");
+				}
+				if (row.selectSingleNode("SPECIAL_TYPE") != null){
+					String type = "";
+					if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("1")){
+						
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("2")){
+						
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("3")){
+						
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("4")){
+						type = "年假";
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("5")){
+						type = "事假";
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("6")){
+						type = "病假";
+					}
+					else if (row.selectSingleNode("SPECIAL_TYPE").getText().equalsIgnoreCase("7")){
+						
+					}
+					rowObj.put("SpecialType", type);
+				}
+				else{
+					rowObj.put("SpecialType", "");
+				}
+				
+				if (row.selectSingleNode("REMARK") != null){
+					rowObj.put("Remark", "");
+				}
+				else{
+					rowObj.put("Remark", "");
+				}
+				rows.add(rowObj);
+			}
+			return rows.toString();
+			
+		} catch (Exception e) {
+			if (con != null){
+				con.close();
+			}
+			retVal = new ResultVal("fail", e.getMessage());
+		} finally {
+			if (con != null){
+				con.close();
+			}
+		}
+		
+		
+		
+		
+		return "";
 	}
 
 	@POST
@@ -79,6 +170,71 @@ public class Example {
 		Gson gson = new Gson();
 		return gson.toJson(retVal);
 	}
+	
+	@POST
+	@Path("/addAttendence")
+	@Produces("text/plain; charset=utf-8")
+	public String addAttendence(String jsonRequest) {
+		ResultVal retVal = new ResultVal("success", "");
+		Connection con = null;
+		try {
+			JSONObject requestJson = JSONObject.fromObject(jsonRequest);
+			String date = requestJson.getString("date");
+			String user = requestJson.getString("user");
+			String department = requestJson.getString("department");
+			String ma = requestJson.getString("morningAtten");
+			String aa = requestJson.getString("afternoonAtten");
+			
+			String morningTime = getSysconfig("late");
+			String afternoonTime = getSysconfig("early");
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://danlihome.wicp.net:3308/OASystem",
+					"danlihome", "ld7vd6yt");
+			Statement statamentMySQL = con.createStatement();
+			
+			con.setAutoCommit(false);
+			
+			if (!ma.equals("0")){
+				
+				statamentMySQL.executeUpdate("INSERT INTO OA_ATTENDENCE  (USER_NAME,GROUP_NAME,ATTENDENCE_TIME,SPECIAL_TYPE) values ('"+user+"','"+department+"','"+date+" "+morningTime+"',"+ma+")");
+				
+			}
+			if (!aa.equals("0")){
+				statamentMySQL.executeUpdate("INSERT INTO OA_ATTENDENCE  (USER_NAME,GROUP_NAME,ATTENDENCE_TIME,SPECIAL_TYPE) values ('"+user+"','"+department+"','"+date+" "+afternoonTime+"',"+aa+")");
+			}
+			
+			con.commit();
+	
+		}
+		catch (Exception e){
+			try {
+				con.rollback();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "fail";
+		}
+		finally {
+			try {
+				if (con != null){
+					con.close();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			}
+		}
+		return "success";
+	}
+	
+	
+	
+	
 
 	@POST
 	@Path("/validateUser")
@@ -872,10 +1028,19 @@ public class Example {
 						if (dayA.get(j).getASpecialType().equalsIgnoreCase("4")) {
 							numOfALeave++;
 						}
+						if (dayA.get(j).getMSpecialType().equalsIgnoreCase("4")) {
+							numOfALeave++;
+						}
 						if (dayA.get(j).getASpecialType().equalsIgnoreCase("5")) {
 							numOfELeave++;
 						}
+						if (dayA.get(j).getMSpecialType().equalsIgnoreCase("5")) {
+							numOfELeave++;
+						}
 						if (dayA.get(j).getASpecialType().equalsIgnoreCase("6")) {
+							numOfSLeave++;
+						}
+						if (dayA.get(j).getMSpecialType().equalsIgnoreCase("6")) {
 							numOfSLeave++;
 						}
 						if (dayA.get(j).getASpecialType().equalsIgnoreCase("7")) {

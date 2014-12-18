@@ -42,7 +42,7 @@ function renderTable(obj) {
 
 			var trItem = jQuery("<tr class = 'trContent'></tr>");
 			for (var j = 0; j < 31; j++) {
-
+				
 				var tdItem = jQuery("<td></td>");
 				if (obj.listItems[i].attendenceList[j]) {
 
@@ -119,12 +119,27 @@ function renderTable(obj) {
 									inhour = jQuery("<div class='tdTop' style = 'color:red'>旷工</div>");
 								}
 							} else {
-								if (tdObj.inHour) {
-									inhour = jQuery("<div class='tdTop'>"
-											+ tdObj.inHour.substring(size)
-											+ "</div>");
-								} else {
-									inhour = jQuery("<div class='tdTop'></div>");
+								
+								if (tdObj.mSpecialType == "4") {
+									inhour = jQuery("<div class='tdTop' style = 'background-color:orange'>年假</div>");
+								}
+								else if (tdObj.mSpecialType == "5") {
+									inhour = jQuery("<div class='tdTop' style = 'background-color:orange'>事假</div>");
+								}
+								else if (tdObj.mSpecialType == "6") {
+									inhour = jQuery("<div class='tdTop' style = 'background-color:orange'>病假</div>");
+								}
+								else if (tdObj.mSpecialType == "7") {
+									inhour = jQuery("<div class='tdTop' style = 'color:red'>旷工</div>");
+								}
+								else{
+									if (tdObj.inHour) {
+										inhour = jQuery("<div class='tdTop'>"
+												+ tdObj.inHour.substring(size)
+												+ "</div>");
+									} else {
+										inhour = jQuery("<div class='tdTop'></div>");
+									}
 								}
 							}
 
@@ -147,21 +162,36 @@ function renderTable(obj) {
 									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>年假</div>");
 								}
 								if (tdObj.aSpecialType == "5") {
-									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>年假</div>");
+									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>事假</div>");
 								}
 								if (tdObj.aSpecialType == "6") {
-									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>年假</div>");
+									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>病假</div>");
 								}
 								if (tdObj.aSpecialType == "7") {
 									outhour = jQuery("<div class='tdBottom' style = 'color:red'>旷工</div>");
 								}
 							} else {
-								if (tdObj.outHour) {
-									outhour = jQuery("<div class='tdBottom'>"
-											+ tdObj.outHour.substring(size)
-											+ "</div>");
-								} else {
-									outhour = jQuery("<div class='tdBottom' style = 'color:red'></div>");
+								
+								if (tdObj.aSpecialType == "4") {
+									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>年假</div>");
+								}
+								else if (tdObj.aSpecialType == "5") {
+									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>事假</div>");
+								}
+								else if (tdObj.aSpecialType == "6") {
+									outhour = jQuery("<div class='tdBottom' style = 'background-color:orange'>病假</div>");
+								}
+								else if (tdObj.aSpecialType == "7") {
+									outhour = jQuery("<div class='tdBottom' style = 'color:red'>旷工</div>");
+								}
+								else{
+									if (tdObj.outHour) {
+										outhour = jQuery("<div class='tdBottom'>"
+												+ tdObj.outHour.substring(size)
+												+ "</div>");
+									} else {
+										outhour = jQuery("<div class='tdBottom' style = 'color:red'></div>");
+									}
 								}
 							}
 							tdItem.append(outhour);

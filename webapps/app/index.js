@@ -66,6 +66,10 @@ function gotoAttendance() {
 	$("#attendanceTable").attr("src", "table.html");
 }
 
+function gotoAttendanceList(){
+	$("#attendanceTable").attr("src", "table2.html");
+}
+
 function gotoSysConfig() {
 	$("#attendanceTable").attr("src", "config.html");
 }
